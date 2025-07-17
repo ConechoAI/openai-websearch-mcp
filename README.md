@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/conechoai-openai-websearch-mcp-badge.png)](https://mseep.ai/app/conechoai-openai-websearch-mcp)
+
 # OpenAI WebSearch MCP Server
 
 This MCP server provides access to OpenAI's websearch functionality through the Model Context Protocol. It allows AI assistants to search the web during conversations with users, providing up-to-date information that may not be available in the assistant's training data. The server can be installed and configured for use with Claude.app or Zed editor.
