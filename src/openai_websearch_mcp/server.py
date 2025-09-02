@@ -40,6 +40,9 @@ def web_search(
             }
         ],
         input=input,
+        reasoning={
+            "effort": "medium",
+        }
     )
     return response.output_text
 
