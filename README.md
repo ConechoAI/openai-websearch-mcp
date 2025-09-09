@@ -47,6 +47,33 @@ Add to your `claude_desktop_config.json`:
 }
 ```
 
+### Cursor
+
+Add to your MCP settings in Cursor:
+
+1. Open Cursor Settings (`Cmd/Ctrl + ,`)
+2. Search for "MCP" or go to Extensions → MCP
+3. Add server configuration:
+
+```json
+{
+  "mcpServers": {
+    "openai-websearch-mcp": {
+      "command": "uvx",
+      "args": ["openai-websearch-mcp"],
+      "env": {
+        "OPENAI_API_KEY": "your-api-key-here",
+        "OPENAI_DEFAULT_MODEL": "gpt-5-mini"
+      }
+    }
+  }
+}
+```
+
+### Claude Code
+
+Claude Code automatically detects MCP servers configured for Claude Desktop. Use the same configuration as above for Claude Desktop.
+
 ### Local Development
 
 For local testing, use the absolute path to your virtual environment:
@@ -84,23 +111,20 @@ Intelligent web search with reasoning model support.
 | `search_context_size` | `string` | Context amount: low, medium, high | `medium` |
 | `user_location` | `object` | Optional location for localized results | `null` |
 
-#### Usage Example
+## 💬 Usage Examples
 
-```typescript
-// Quick search for current information
-await openai_web_search({
-  input: "Latest developments in AI reasoning models 2025",
-  model: "gpt-5-mini",
-  reasoning_effort: "low"
-});
+Once configured, simply ask your AI assistant to search for information using natural language:
 
-// Deep research query
-await openai_web_search({
-  input: "Comprehensive analysis of quantum computing breakthroughs",
-  model: "gpt-5",
-  reasoning_effort: "high"
-});
-```
+### Quick Search
+> "Search for the latest developments in AI reasoning models using openai_web_search"
+
+### Deep Research  
+> "Use openai_web_search with gpt-5 and high reasoning effort to provide a comprehensive analysis of quantum computing breakthroughs"
+
+### Localized Search
+> "Search for local tech meetups in San Francisco this week using openai_web_search"
+
+The AI assistant will automatically use the `openai_web_search` tool with appropriate parameters based on your request.
 
 ## 🤖 Model Selection Guide
 
