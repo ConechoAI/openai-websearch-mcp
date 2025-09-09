@@ -1,117 +1,247 @@
-# OpenAI WebSearch MCP Server
+# OpenAI WebSearch MCP Server 🔍
 
-This MCP server provides access to OpenAI's websearch functionality through the Model Context Protocol. It allows AI assistants to search the web during conversations with users, providing up-to-date information that may not be available in the assistant's training data. The server can be installed and configured for use with Claude.app or Zed editor.
+[![PyPI version](https://badge.fury.io/py/openai-websearch-mcp.svg)](https://badge.fury.io/py/openai-websearch-mcp)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-green.svg)](https://modelcontextprotocol.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## One click installation & Configuration
+An advanced MCP server that provides intelligent web search capabilities using OpenAI's reasoning models. Perfect for AI assistants that need up-to-date information with smart reasoning capabilities.
 
-### Claude 
+## ✨ Features
 
-!!Can using this command auto update configure file（Recommend）
+- **🧠 Reasoning Model Support**: Full compatibility with OpenAI's latest reasoning models (gpt-5, gpt-5-mini, gpt-5-nano, o3, o4-mini)
+- **⚡ Smart Effort Control**: Intelligent `reasoning_effort` defaults based on use case
+- **🔄 Multi-Mode Search**: Fast iterations with gpt-5-mini or deep research with gpt-5
+- **🌍 Localized Results**: Support for location-based search customization
+- **📝 Rich Descriptions**: Complete parameter documentation for easy integration
+- **🔧 Flexible Configuration**: Environment variable support for easy deployment
+
+## 🚀 Quick Start
+
+### One-Click Installation for Claude Desktop
+
 ```bash
-OPENAI_API_KEY=sk-xxxx uv run --with uv --with openai-websearch-mcp openai-websearch-mcp-install
+OPENAI_API_KEY=sk-xxxx uvx --with openai-websearch-mcp openai-websearch-mcp-install
 ```
-sk-xxxx is your API key. You can get it from [openai's open platform](https://platform.openai.com/)
+
+Replace `sk-xxxx` with your OpenAI API key from the [OpenAI Platform](https://platform.openai.com/).
+
+## ⚙️ Configuration
+
+### Claude Desktop
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "openai-websearch-mcp": {
+      "command": "uvx",
+      "args": ["openai-websearch-mcp"],
+      "env": {
+        "OPENAI_API_KEY": "your-api-key-here",
+        "OPENAI_DEFAULT_MODEL": "gpt-5-mini"
+      }
+    }
+  }
+}
+```
 
 ### Cursor
-Conming soon
 
-### Windsurf
-Conming soon
+Add to your MCP settings in Cursor:
 
-
-## Available Tools
-
-- `web_search` - Call openai websearch as tool.
-  - Required arguments:
-    - `type` (string): web_search_preview
-    - `search_context_size` (string): High level guidance for the amount of context window space to use for the search. One of low, medium, or high. medium is the default.
-    - `user_location` (object or null)
-      - `type` (string): The type of location > approximation. Always approximate.
-      - `city` (string): Free text input for the city of the user, e.g. San Francisco.
-      - `country` (string): The two-letter ISO country code of the user, e.g. US.
-      - `region` (string): Free text input for the region of the user, e.g. California.
-      - `timezone` (string): The IANA timezone of the user, e.g. America/Los_Angeles.
-
-
-## Manual installation and configuration
-
-Please make sure `uvx` is installed before installation
-
-Add to your Claude settings:
-
-
-1、Using uvx
+1. Open Cursor Settings (`Cmd/Ctrl + ,`)
+2. Search for "MCP" or go to Extensions → MCP
+3. Add server configuration:
 
 ```json
-"mcpServers": {
-  "openai-websearch-mcp": {
-    "command": "uvx",
-    "args": ["openai-websearch-mcp"],
-    "env": {
-        "OPENAI_API_KEY": "your-api-key-here"
+{
+  "mcpServers": {
+    "openai-websearch-mcp": {
+      "command": "uvx",
+      "args": ["openai-websearch-mcp"],
+      "env": {
+        "OPENAI_API_KEY": "your-api-key-here",
+        "OPENAI_DEFAULT_MODEL": "gpt-5-mini"
+      }
     }
   }
 }
 ```
 
-2、Using pip installation
+### Claude Code
 
-1）install `openai-websearch-mcp` via pip:
+Claude Code automatically detects MCP servers configured for Claude Desktop. Use the same configuration as above for Claude Desktop.
+
+### Local Development
+
+For local testing, use the absolute path to your virtual environment:
+
+```json
+{
+  "mcpServers": {
+    "openai-websearch-mcp": {
+      "command": "/path/to/your/project/.venv/bin/python",
+      "args": ["-m", "openai_websearch_mcp"],
+      "env": {
+        "OPENAI_API_KEY": "your-api-key-here",
+        "OPENAI_DEFAULT_MODEL": "gpt-5-mini",
+        "PYTHONPATH": "/path/to/your/project/src"
+      }
+    }
+  }
+}
+```
+
+## 🛠️ Available Tools
+
+### `openai_web_search`
+
+Intelligent web search with reasoning model support.
+
+#### Parameters
+
+| Parameter | Type | Description | Default |
+|-----------|------|-------------|---------|
+| `input` | `string` | The search query or question to search for | *Required* |
+| `model` | `string` | AI model to use. Supports gpt-4o, gpt-4o-mini, gpt-5, gpt-5-mini, gpt-5-nano, o3, o4-mini | `gpt-5-mini` |
+| `reasoning_effort` | `string` | Reasoning effort level: low, medium, high, minimal | Smart default |
+| `type` | `string` | Web search API version | `web_search_preview` |
+| `search_context_size` | `string` | Context amount: low, medium, high | `medium` |
+| `user_location` | `object` | Optional location for localized results | `null` |
+
+## 💬 Usage Examples
+
+Once configured, simply ask your AI assistant to search for information using natural language:
+
+### Quick Search
+> "Search for the latest developments in AI reasoning models using openai_web_search"
+
+### Deep Research  
+> "Use openai_web_search with gpt-5 and high reasoning effort to provide a comprehensive analysis of quantum computing breakthroughs"
+
+### Localized Search
+> "Search for local tech meetups in San Francisco this week using openai_web_search"
+
+The AI assistant will automatically use the `openai_web_search` tool with appropriate parameters based on your request.
+
+## 🤖 Model Selection Guide
+
+### Quick Multi-Round Searches 🚀
+- **Recommended**: `gpt-5-mini` with `reasoning_effort: "low"`
+- **Use Case**: Fast iterations, real-time information, multiple quick queries
+- **Benefits**: Lower latency, cost-effective for frequent searches
+
+### Deep Research 🔬
+- **Recommended**: `gpt-5` with `reasoning_effort: "medium"` or `"high"`
+- **Use Case**: Comprehensive analysis, complex topics, detailed investigation
+- **Benefits**: Multi-round reasoned results, no need for agent iterations
+
+### Model Comparison
+
+| Model | Reasoning | Default Effort | Best For |
+|-------|-----------|----------------|----------|
+| `gpt-4o` | ❌ | N/A | Standard search |
+| `gpt-4o-mini` | ❌ | N/A | Basic queries |
+| `gpt-5-mini` | ✅ | `low` | Fast iterations |
+| `gpt-5` | ✅ | `medium` | Deep research |
+| `gpt-5-nano` | ✅ | `medium` | Balanced approach |
+| `o3` | ✅ | `medium` | Advanced reasoning |
+| `o4-mini` | ✅ | `medium` | Efficient reasoning |
+
+## 📦 Installation
+
+### Using uvx (Recommended)
 
 ```bash
+# Install and run directly
+uvx openai-websearch-mcp
+
+# Or install globally
+uvx install openai-websearch-mcp
+```
+
+### Using pip
+
+```bash
+# Install from PyPI
 pip install openai-websearch-mcp
+
+# Run the server
+python -m openai_websearch_mcp
 ```
 
-2）modify your Claude settings
-
-```json
-"mcpServers": {
-  "openai-websearch-mcp": {
-    "command": "python",
-    "args": ["-m", "openai_websearch_mcp"],
-    "env": {
-        "OPENAI_API_KEY": "your-api-key-here"
-    }
-  }
-}
-```
-
-### Configure for Zed
-
-Add to your Zed settings.json:
-
-Using uvx
-
-```json
-"context_servers": [
-  "openai-websearch-mcp": {
-    "command": "uvx",
-    "args": ["openai-websearch-mcp"],
-    "env": {
-        "OPENAI_API_KEY": "your-api-key-here"
-    }
-  }
-],
-```
-
-Using pip installation
-
-```json
-"context_servers": {
-  "openai-websearch-mcp": {
-    "command": "python",
-    "args": ["-m", "openai_websearch_mcp"],
-    "env": {
-        "OPENAI_API_KEY": "your-api-key-here"
-    }
-  }
-},
-```
-
-## Debugging
-
-You can use the MCP inspector to debug the server. For uvx installations:
+### From Source
 
 ```bash
-npx @modelcontextprotocol/inspector uvx openai-websearch-mcp
+# Clone the repository
+git clone https://github.com/yourusername/openai-websearch-mcp.git
+cd openai-websearch-mcp
+
+# Install dependencies
+uv sync
+
+# Run in development mode
+uv run python -m openai_websearch_mcp
 ```
+
+## 👩‍💻 Development
+
+### Setup Development Environment
+
+```bash
+# Clone and setup
+git clone https://github.com/yourusername/openai-websearch-mcp.git
+cd openai-websearch-mcp
+
+# Create virtual environment and install dependencies
+uv sync
+
+# Run tests
+uv run python -m pytest
+
+# Install in development mode
+uv pip install -e .
+```
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | Your OpenAI API key | *Required* |
+| `OPENAI_DEFAULT_MODEL` | Default model to use | `gpt-5-mini` |
+
+## 🐛 Debugging
+
+### Using MCP Inspector
+
+```bash
+# For uvx installations
+npx @modelcontextprotocol/inspector uvx openai-websearch-mcp
+
+# For pip installations
+npx @modelcontextprotocol/inspector python -m openai_websearch_mcp
+```
+
+### Common Issues
+
+**Issue**: "Unsupported parameter: 'reasoning.effort'"
+**Solution**: This occurs when using non-reasoning models (gpt-4o, gpt-4o-mini) with reasoning_effort parameter. The server automatically handles this by only applying reasoning parameters to compatible models.
+
+**Issue**: "No module named 'openai_websearch_mcp'"
+**Solution**: Ensure you've installed the package correctly and your Python path includes the package location.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- 🤖 Generated with [Claude Code](https://claude.ai/code)
+- 🔥 Powered by [OpenAI's Web Search API](https://openai.com)
+- 🛠️ Built on the [Model Context Protocol](https://modelcontextprotocol.io/)
+
+---
+
+**Co-Authored-By**: Claude <noreply@anthropic.com>
