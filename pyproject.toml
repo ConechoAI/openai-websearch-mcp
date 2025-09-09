@@ -1,6 +1,6 @@
 [project]
 name = "openai-websearch-mcp"
-version = "0.4.1"
+version = "0.4.2"
 description = "using openai websearch as mcp server"
 readme = "README.md"
 requires-python = ">=3.10"
