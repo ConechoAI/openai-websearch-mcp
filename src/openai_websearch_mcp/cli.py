@@ -142,6 +142,10 @@ def install() -> None:
                 api_key = ""
 
     env_dict["OPENAI_API_KEY"] = api_key
+    
+    # 添加默认模型配置（可选）
+    default_model = os.environ.get("OPENAI_DEFAULT_MODEL", "gpt-5-mini")
+    env_dict["OPENAI_DEFAULT_MODEL"] = default_model
 
     uv = which('uvx', path=env_dict['PATH'])
     command = uv if uv else "uvx"
