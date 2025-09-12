@@ -42,7 +42,7 @@ def openai_web_search(
                                    Field(description="Amount of context to include in search results")] = "medium",
     user_location: Annotated[Optional[UserLocation], 
                             Field(description="Optional user location for localized search results")] = None,
-) -> list[str]:
+) -> str:
     # 从环境变量读取默认模型，如果没有则使用 gpt-5-mini
     if model is None:
         model = os.getenv("OPENAI_DEFAULT_MODEL", "gpt-5-mini")
